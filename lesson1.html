@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS - Bài 1: Cấu Trúc Câu & Sự Hòa Hợp S-V</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutral (Background: #FEFCE8, Text: #3F3F46, Primary: #3B82F6, Accent: #10B981) -->
+    <!-- Application Structure Plan: A two-section SPA. Section 1 ('Lý Thuyết') uses nested tabs and accordions to present grammar rules logically without overwhelming the user. Section 2 ('Luyện Tập') is an interactive quiz with 'show/hide answer' functionality for immediate feedback. This structure separates learning from practice, allowing focused study and self-assessment, which is ideal for the target audience of IELTS students. -->
+    <!-- Visualization & Content Choices: Report Info: Sentence structure rules -> Goal: Inform -> Presentation: Accordion list -> Interaction: Click to expand/collapse -> Justification: Organizes dense text into digestible chunks. Report Info: S-V agreement rules -> Goal: Inform -> Presentation: Accordion list -> Interaction: Click to expand/collapse -> Justification: Same as above. Report Info: Error identification sentences -> Goal: Test/Practice -> Presentation: Interactive cards -> Interaction: 'Check Answer' button reveals correction and explanation -> Justification: Active recall and immediate feedback are highly effective for learning grammar. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #FEFCE8;
+            color: #3F3F46;
+        }
+        .tab-active {
+            background-color: #3B82F6;
+            color: #ffffff;
+            border-color: #3B82F6;
+        }
+        .tab-inactive {
+            background-color: #ffffff;
+            color: #3B82F6;
+            border-color: #E5E7EB;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-blue-600">Bài 1: Cấu Trúc Câu & Sự Hòa Hợp S-V</h1>
+            <p class="mt-2 text-lg text-gray-600">Cẩm nang ngữ pháp thiết yếu cho IELTS</p>
+            <a href="index.html" class="mt-4 inline-block text-blue-500 hover:text-blue-700 font-medium">
+                &larr; Quay lại trang chủ
+            </a>
+        </header>
+
+        <div class="w-full max-w-4xl mx-auto">
+            <div class="mb-6 flex justify-center border-b-2 border-gray-200">
+                <button id="tab-btn-theory" class="main-tab-btn tab-active text-lg font-semibold py-3 px-6 focus:outline-none" onclick="switchMainTab('theory')">Lý Thuyết</button>
+                <button id="tab-btn-practice" class="main-tab-btn tab-inactive text-lg font-semibold py-3 px-6 focus:outline-none" onclick="switchMainTab('practice')">Luyện Tập</button>
+            </div>
+
+            <main id="main-content">
+                <section id="theory-section">
+                    <p class="text-center mb-6 text-gray-700">Ôn lại các quy tắc ngữ pháp cốt lõi. Nhấn vào từng mục để xem chi tiết.</p>
+                    <div id="accordion-container"></div>
+                </section>
+
+                <section id="practice-section" class="hidden">
+                    <p class="text-center mb-6 text-gray-700">Thực hành phát hiện lỗi sai trong các câu dưới đây. Nhấn "Kiểm tra đáp án" để xem giải thích.</p>
+                    <div id="exercise-container" class="space-y-6"></div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        const theoryData = [
+            {
+                title: 'Cấu Trúc Câu Cơ Bản',
+                content: `
+                    <p class="mb-2">Một câu hoàn chỉnh thường bao gồm: <strong>Chủ ngữ (S)</strong>, <strong>Động từ (V)</strong> và đôi khi là <strong>Tân ngữ (O)</strong> hoặc <strong>Bổ ngữ (C)</strong>.</p>
+                    <p class="font-mono bg-gray-100 p-2 rounded-md text-center mb-4">S + V (+ O/C)</p>
+                    <h4 class="font-semibold text-lg mb-2 text-blue-700">Các loại câu cơ bản:</h4>
+                    <ul class="list-disc list-inside space-y-2 pl-4">
+                        <li><strong>Câu đơn:</strong> Chỉ có một mệnh đề độc lập. <br><em>Ví dụ: She studies English every day.</em></li>
+                        <li><strong>Câu ghép:</strong> Gồm hai hoặc nhiều mệnh đề độc lập, nối bằng liên từ (and, but, or). <br><em>Ví dụ: I wanted to attend the lecture, but I had to finish my homework.</em></li>
+                        <li><strong>Câu phức:</strong> Gồm một mệnh đề độc lập và ít nhất một mệnh đề phụ thuộc. <br><em>Ví dụ: Although it was raining, we went hiking.</em></li>
+                        <li><strong>Câu ghép phức:</strong> Kết hợp câu ghép và câu phức. <br><em>Ví dụ: I wanted to join the club, but I couldn’t because I was too busy.</em></li>
+                    </ul>
+                `
+            },
+            {
+                title: 'Quy tắc 1: Hòa hợp cơ bản',
+                content: `
+                    <p>Chủ ngữ số ít đi với động từ số ít (thêm -s/es), chủ ngữ số nhiều đi với động từ số nhiều.</p>
+                    <ul class="list-disc list-inside space-y-2 pl-4 mt-2">
+                        <li><strong>Số ít:</strong> The <strong>student reads</strong> a book.</li>
+                        <li><strong>Số nhiều:</strong> The <strong>students read</strong> books.</li>
+                    </ul>
+                `
+            },
+            {
+                title: 'Quy tắc 2: Danh từ tập hợp',
+                content: `
+                    <p>Danh từ như <em>team, family, group</em> có thể là số ít hoặc số nhiều tùy ngữ cảnh.</p>
+                    <ul class="list-disc list-inside space-y-2 pl-4 mt-2">
+                        <li><strong>Xem như một đơn vị (số ít):</strong> The <strong>team is</strong> practicing.</li>
+                        <li><strong>Nhấn mạnh từng thành viên (số nhiều):</strong> The <strong>team are</strong> arguing.</li>
+                    </ul>
+                `
+            },
+            {
+                title: 'Quy tắc 3: Danh từ không đếm được',
+                content: `
+                    <p>Danh từ không đếm được như <em>water, information, money</em> luôn đi với động từ số ít.</p>
+                    <ul class="list-disc list-inside space-y-2 pl-4 mt-2">
+                        <li>The <strong>information is</strong> useful.</li>
+                        <li><strong>Water flows</strong> smoothly.</li>
+                    </ul>
+                `
+            },
+            {
+                title: 'Quy tắc 4: Chủ ngữ nối bằng and, or, nor',
+                content: `
+                    <ul class="list-disc list-inside space-y-2 pl-4">
+                        <li><strong>Nối bằng 'and':</strong> Động từ số nhiều. <br><em>Ví dụ: Tom and Jerry <strong>are</strong> friends.</em></li>
+                        <li><strong>Nối bằng 'or/nor':</strong> Động từ phụ thuộc vào chủ ngữ gần nhất. <br><em>Ví dụ: Either the teacher or the students <strong>are</strong> responsible.</em> <br><em>Ví dụ: Neither the students nor the teacher <strong>is</strong> late.</em></li>
+                    </ul>
+                `
+            },
+            {
+                title: 'Quy tắc 5: Đại từ bất định',
+                content: `
+                    <p>Đại từ như <em>everyone, somebody, nobody</em> là số ít.</p>
+                    <ul class="list-disc list-inside space-y-2 pl-4 mt-2">
+                        <li><strong>Everyone wants</strong> to succeed.</li>
+                        <li>Với <em>all, some</em>, động từ phụ thuộc vào danh từ theo sau. <br><em>Ví dụ: All of the water <strong>is</strong> clean. (số ít)</em> <br><em>Ví dụ: All of the books <strong>are</strong> interesting. (số nhiều)</em></li>
+                    </ul>
+                `
+            },
+            {
+                title: 'Quy tắc 6: Chủ ngữ là mệnh đề/cụm danh từ',
+                content: `
+                    <p>Khi chủ ngữ là một mệnh đề hoặc cụm danh từ (V-ing), động từ thường ở số ít.</p>
+                    <ul class="list-disc list-inside space-y-2 pl-4 mt-2">
+                        <li>What he said <strong>is</strong> true.</li>
+                        <li>Playing football <strong>is</strong> fun.</li>
+                    </ul>
+                `
+            },
+            {
+                title: 'Quy tắc 7: Từ chỉ số lượng',
+                content: `
+                    <ul class="list-disc list-inside space-y-2 pl-4">
+                        <li><strong>A number of</strong> + N (số nhiều) + V (số nhiều). <br><em>Ví dụ: A number of students <strong>are</strong> absent.</em></li>
+                        <li><strong>The number of</strong> + N (số nhiều) + V (số ít). <br><em>Ví dụ: The number of visitors <strong>is</strong> increasing.</em></li>
+                    </ul>
+                `
+            }
+        ];
+
+        const exerciseData = [
+            {
+                id: 1,
+                question: "The number of students in the class are increasing rapidly.",
+                error: "Động từ 'are' không hòa hợp với chủ ngữ 'The number of students'.",
+                correction: "The number of students in the class <strong>is</strong> increasing rapidly.",
+                explanation: "Theo quy tắc 7, 'The number of' + danh từ số nhiều + động từ số ít."
+            },
+            {
+                id: 2,
+                question: "Everyone, including the teachers and the principal, were surprised by the news.",
+                error: "Động từ 'were' không hòa hợp với chủ ngữ 'Everyone'.",
+                correction: "Everyone, including the teachers and the principal, <strong>was</strong> surprised by the news.",
+                explanation: "Theo quy tắc 5, đại từ bất định 'Everyone' là chủ ngữ số ít. Cụm từ 'including...' chỉ là thông tin bổ sung, không ảnh hưởng đến việc chia động từ."
+            },
+            {
+                id: 3,
+                question: "Neither the manager nor his employees wants to work overtime this weekend.",
+                error: "Động từ 'wants' không hòa hợp với chủ ngữ gần nhất là 'employees'.",
+                correction: "Neither the manager nor his employees <strong>want</strong> to work overtime this weekend.",
+                explanation: "Theo quy tắc 4, khi chủ ngữ được nối bằng 'nor', động từ hòa hợp với chủ ngữ gần nó nhất (his employees - số nhiều)."
+            },
+            {
+                id: 4,
+                question: "The information provided by the research team are crucial for our project.",
+                error: "Động từ 'are' không hòa hợp với chủ ngữ không đếm được 'information'.",
+                correction: "The information provided by the research team <strong>is</strong> crucial for our project.",
+                explanation: "Theo quy tắc 3, 'information' là danh từ không đếm được, do đó phải đi với động từ số ít."
+            },
+            {
+                id: 5,
+                question: "Developing a sustainable energy source is vital for the future of our planet, it requires significant investment.",
+                error: "Lỗi câu nối (comma splice). Hai mệnh đề độc lập được nối với nhau chỉ bằng một dấu phẩy.",
+                correction: "Developing a sustainable energy source is vital for the future of our planet, <strong>and</strong> it requires significant investment. (Hoặc dùng dấu chấm câu để tách thành 2 câu).",
+                explanation: "Để nối hai mệnh đề độc lập, cần sử dụng liên từ (như and, but) hoặc dấu chấm phẩy (;), hoặc tách thành hai câu riêng biệt."
+            },
+            {
+                id: 6,
+                question: "Although the weather was terrible, but we decided to go for a walk in the park.",
+                error: "Sử dụng thừa liên từ. 'Although' và 'but' không được dùng cùng nhau trong một câu.",
+                correction: "<strong>Although</strong> the weather was terrible, we decided to go for a walk in the park. (Hoặc: The weather was terrible, <strong>but</strong> we decided...)",
+                explanation: "'Although' đã thể hiện sự tương phản, vì vậy không cần thêm 'but'."
+            },
+            {
+                id: 7,
+                question: "One of the main challenges facing modern societies are the issue of climate change.",
+                error: "Động từ 'are' không hòa hợp với chủ ngữ chính là 'One'.",
+                correction: "One of the main challenges facing modern societies <strong>is</strong> the issue of climate change.",
+                explanation: "Chủ ngữ của câu là 'One' (Một trong những...), là chủ ngữ số ít. Cụm từ 'of the main challenges...' chỉ bổ nghĩa cho 'One'."
+            },
+            {
+                id: 8,
+                question: "The government's new policy, along with several initiatives, aim to reduce unemployment rates.",
+                error: "Động từ 'aim' không hòa hợp với chủ ngữ chính 'policy'.",
+                correction: "The government's new policy, along with several initiatives, <strong>aims</strong> to reduce unemployment rates.",
+                explanation: "Chủ ngữ chính là 'The government's new policy' (số ít). Cụm từ 'along with several initiatives' là thông tin chèn vào, không ảnh hưởng đến việc chia động từ."
+            },
+            {
+                id: 9,
+                isParagraph: true,
+                question: "The rise of artificial intelligence have brought about significant changes in various industries. Many people believes that AI will revolutionize the way we live and work. However, there is also concerns about its potential impact on employment. A number of experts argues that automation could displace many jobs, while others maintain that new opportunities will emerge. The most important thing, in my opinion, are to ensure that society adapts to these changes effectively.",
+                correction: "The rise of artificial intelligence <strong>has</strong> brought about significant changes in various industries. Many people <strong>believe</strong> that AI will revolutionize the way we live and work. However, there <strong>are</strong> also concerns about its potential impact on employment. A number of experts <strong>argue</strong> that automation could displace many jobs, while others maintain that new opportunities will emerge. The most important thing, in my opinion, <strong>is</strong> to ensure that society adapts to these changes effectively.",
+                explanation: `
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>have -> has:</strong> Chủ ngữ 'The rise' là số ít.</li>
+                        <li><strong>believes -> believe:</strong> Chủ ngữ 'Many people' là số nhiều.</li>
+                        <li><strong>is -> are:</strong> Chủ ngữ theo sau là 'concerns' (số nhiều). Cấu trúc 'There is/are' phụ thuộc vào danh từ đứng sau.</li>
+                        <li><strong>argues -> argue:</strong> Theo quy tắc 7, 'A number of experts' đi với động từ số nhiều.</li>
+                        <li><strong>are -> is:</strong> Chủ ngữ là cụm danh từ 'The most important thing', là số ít.</li>
+                    </ul>
+                `
+            }
+        ];
+
+        function buildAccordions() {
+            const container = document.getElementById('accordion-container');
+            container.innerHTML = theoryData.map((item, index) => `
+                <div class="border border-gray-200 rounded-lg mb-3 bg-white shadow-sm">
+                    <button class="accordion-btn w-full text-left p-4 font-semibold text-gray-800 flex justify-between items-center focus:outline-none hover:bg-gray-50" onclick="toggleAccordion(${index})">
+                        <span>${item.title}</span>
+                        <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="accordion-content px-4 pb-4 text-gray-700">
+                        ${item.content}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function buildExercises() {
+            const container = document.getElementById('exercise-container');
+            container.innerHTML = exerciseData.map(item => `
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <p class="mb-4 text-lg">${item.isParagraph ? '<strong>Đoạn văn:</strong><br>' : ''}"${item.question}"</p>
+                    <button id="btn-${item.id}" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-300" onclick="toggleAnswer(${item.id})">Kiểm tra đáp án</button>
+                    <div id="answer-${item.id}" class="hidden mt-4 border-t pt-4">
+                        ${item.isParagraph ? '' : `<p class="mb-2"><strong class="text-red-600">Lỗi sai:</strong> ${item.error || ''}</p>`}
+                        <p class="mb-2"><strong class="text-green-600">Sửa lại:</strong> ${item.correction}</p>
+                        <p class="mb-2"><strong class="text-indigo-600">Giải thích:</strong> ${item.explanation}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function toggleAccordion(index) {
+            const button = document.querySelectorAll('.accordion-btn')[index];
+            const content = document.querySelectorAll('.accordion-content')[index];
+            const icon = button.querySelector('svg');
+
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                document.querySelectorAll('.accordion-content').forEach(el => el.style.maxHeight = null);
+                document.querySelectorAll('.accordion-btn svg').forEach(el => el.style.transform = 'rotate(0deg)');
+                content.style.maxHeight = content.scrollHeight + "px";
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        function toggleAnswer(id) {
+            const answerDiv = document.getElementById(`answer-${id}`);
+            const button = document.getElementById(`btn-${id}`);
+            const isHidden = answerDiv.classList.contains('hidden');
+
+            if (isHidden) {
+                answerDiv.classList.remove('hidden');
+                button.textContent = 'Ẩn đáp án';
+                button.classList.remove('bg-blue-500', 'hover:bg-blue-600');
+                button.classList.add('bg-gray-500', 'hover:bg-gray-600');
+            } else {
+                answerDiv.classList.add('hidden');
+                button.textContent = 'Kiểm tra đáp án';
+                button.classList.remove('bg-gray-500', 'hover:bg-gray-600');
+                button.classList.add('bg-blue-500', 'hover:bg-blue-600');
+            }
+        }
+
+        function switchMainTab(tabName) {
+            const theorySection = document.getElementById('theory-section');
+            const practiceSection = document.getElementById('practice-section');
+            const theoryBtn = document.getElementById('tab-btn-theory');
+            const practiceBtn = document.getElementById('tab-btn-practice');
+
+            if (tabName === 'theory') {
+                theorySection.classList.remove('hidden');
+                practiceSection.classList.add('hidden');
+                theoryBtn.classList.add('tab-active');
+                theoryBtn.classList.remove('tab-inactive');
+                practiceBtn.classList.add('tab-inactive');
+                practiceBtn.classList.remove('tab-active');
+            } else {
+                theorySection.classList.add('hidden');
+                practiceSection.classList.remove('hidden');
+                practiceBtn.classList.add('tab-active');
+                practiceBtn.classList.remove('tab-inactive');
+                theoryBtn.classList.add('tab-inactive');
+                theoryBtn.classList.remove('tab-active');
+            }
+        }
+
+        window.onload = function() {
+            buildAccordions();
+            buildExercises();
+        };
+    </script>
+</body>
+</html>
