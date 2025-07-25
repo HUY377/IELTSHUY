@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS - Bài 2: Các Thì Thường Dùng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutral (Background: #FEFCE8, Text: #3F3F46, Primary: #3B82F6, Accent: #10B981) -->
+    <!-- Application Structure Plan: A two-section SPA (Lý Thuyết, Luyện Tập) similar to Lesson 1, but focused on tenses. The 'Lý Thuyết' section uses accordions for each tense, allowing users to easily review specific rules. The 'Luyện Tập' section provides interactive error identification exercises with immediate feedback, reinforcing learning. This consistent structure across lessons enhances usability. -->
+    <!-- Visualization & Content Choices: Report Info: Tense rules (formula, usage, examples) -> Goal: Inform -> Presentation: Accordion list -> Interaction: Click to expand/collapse -> Justification: Organizes detailed information about each tense into manageable, easy-to-access blocks. Report Info: Error identification sentences -> Goal: Test/Practice -> Presentation: Interactive cards -> Interaction: 'Check Answer' button reveals correction and explanation -> Justification: Active recall and immediate feedback are crucial for mastering tense usage. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #FEFCE8;
+            color: #3F3F46;
+        }
+        .tab-active {
+            background-color: #3B82F6;
+            color: #ffffff;
+            border-color: #3B82F6;
+        }
+        .tab-inactive {
+            background-color: #ffffff;
+            color: #3B82F6;
+            border-color: #E5E7EB;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-blue-600">Bài 2: Các Thì Thường Dùng Trong IELTS</h1>
+            <p class="mt-2 text-lg text-gray-600">Nắm vững cách sử dụng các thì trong tiếng Anh</p>
+            <a href="index.html" class="mt-4 inline-block text-blue-500 hover:text-blue-700 font-medium">
+                &larr; Quay lại trang chủ
+            </a>
+        </header>
+
+        <div class="w-full max-w-4xl mx-auto">
+            <div class="mb-6 flex justify-center border-b-2 border-gray-200">
+                <button id="tab-btn-theory" class="main-tab-btn tab-active text-lg font-semibold py-3 px-6 focus:outline-none" onclick="switchMainTab('theory')">Lý Thuyết</button>
+                <button id="tab-btn-practice" class="main-tab-btn tab-inactive text-lg font-semibold py-3 px-6 focus:outline-none" onclick="switchMainTab('practice')">Luyện Tập</button>
+            </div>
+
+            <main id="main-content">
+                <section id="theory-section">
+                    <p class="text-center mb-6 text-gray-700">Ôn lại công thức và cách dùng các thì quan trọng. Nhấn vào từng mục để xem chi tiết.</p>
+                    <div id="accordion-container"></div>
+                </section>
+
+                <section id="practice-section" class="hidden">
+                    <p class="text-center mb-6 text-gray-700">Thực hành phát hiện lỗi sai liên quan đến thì. Nhấn "Kiểm tra đáp án" để xem giải thích.</p>
+                    <div id="exercise-container" class="space-y-6"></div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        const theoryData = [
+            {
+                title: '1. Thì Hiện Tại Đơn (Present Simple)',
+                content: `
+                    <p class="font-semibold mb-1">Công thức:</p>
+                    <ul class="list-disc list-inside space-y-1 pl-4">
+                        <li>Khẳng định: S + V(s/es)</li>
+                        <li>Phủ định: S + do/does + not + V</li>
+                        <li>Câu hỏi: Do/Does + S + V?</li>
+                    </ul>
+                    <p class="font-semibold mt-3 mb-1">Cách dùng:</p>
+                    <ul class="list-disc list-inside space-y-1 pl-4">
+                        <li>Thói quen, sự việc lặp lại: <em>I go to the gym every morning.</em></li>
+                        <li>Sự thật hiển nhiên: <em>The sun rises in the east.</em></li>
+                        <li>Trạng thái, cảm xúc, ý kiến: <em>She believes in hard work.</em></li>
+                        <li>IELTS Writing Task 1: Mô tả thông tin chung/xu hướng ổn định.</li>
+                        <li>IELTS Speaking: Nói về thói quen cá nhân/thông tin chung.</li>
+                    </ul>
+                `
+            },
+            {
+                title: '2. Thì Hiện Tại Hoàn Thành (Present Perfect)',
+                content: `
+                    <p class="font-semibold mb-1">Công thức:</p>
+                    <ul class="list-disc list-inside space-y-1 pl-4">
+                        <li>Khẳng định: S + have/has + V3/ed</li>
+                        <li>Phủ định: S + have/has + not + V3/ed</li>
+                        <li>Câu hỏi: Have/Has + S + V3/ed?</li>
+                    </ul>
+                    <p class="font-semibold mt-3 mb-1">Cách dùng:</p>
+                    <ul class="list-disc list-inside space-y-1 pl-4">
+                        <li>Hành động quá khứ có ảnh hưởng hiện tại: <em>I have lost my keys.</em></li>
+                        <li>Kinh nghiệm sống: <em>She has traveled to five countries.</em></li>
+                        <li>Bắt đầu quá khứ, tiếp tục hiện tại (since, for): <em>They have lived here for ten years.</em></li>
+                        <li>IELTS Writing: Xu hướng/kết quả kéo dài đến hiện tại.</li>
+                        <li>IELTS Speaking: Chia sẻ kinh nghiệm/thành tựu.</li>
+                    </ul>
+                `
+            },
+            {
+                title: '3. Thì Hiện Tại Tiếp Diễn (Present Continuous)',
+                content: `
+                    <p class="font-semibold mb-1">Công thức:</p>
+                    <ul class="list-disc list-inside space-y-1 pl-4">
+                        <li>Khẳng định: S + am/is/are + V-ing</li>
+                        <li>Phủ định: S + am/is/are + not + V-ing</li>
+                        <li>Câu hỏi: Am/Is/Are + S + V-ing?</li>
+                    </ul>
+                    <p class="font-semibold mt-3 mb-1">Cách dùng:</p>
+                    <ul class="list-disc list-inside space-y-1 pl-4">
+                        <li>Hành động đang xảy ra tại thời điểm nói: <em>I am speaking to you now.</em></li>
+                        <li>Hành động tạm thời: <em>She is staying with her aunt this week.</em></li>
+                        <li>Xu hướng/thay đổi đang diễn ra: <em>The climate is changing rapidly.</em></li>
+                        <li>IELTS Writing Task 1: Mô tả xu hướng đang diễn ra.</li>
+                        <li>IELTS Speaking: Hoạt động hiện tại/kế hoạch tạm thời.</li>
+                    </ul>
+                `
+            },
+            {
+                title: '4. Thì Quá Khứ Tiếp Diễn (Past Continuous)',
+                content: `
+                    <p class="font-semibold mb-1">Công thức:</p>
+                    <ul class="list-disc list-inside space-y-1 pl-4">
+                        <li>Khẳng định: S + was/were + V-ing</li>
+                        <li>Phủ định: S + was/were + not + V-ing</li>
+                        <li>Câu hỏi: Was/Were + S + V-ing?</li>
+                    </ul>
+                    <p class="font-semibold mt-3 mb-1">Cách dùng:</p>
+                    <ul class="list-disc list-inside space-y-1 pl-4">
+                        <li>Hành động đang xảy ra tại thời điểm cụ thể trong quá khứ: <em>At 7 PM yesterday, I was reading a book.</em></li>
+                        <li>Hành động đang xảy ra thì bị chen ngang: <em>She was cooking when the phone rang.</em></li>
+                        <li>Mô tả bối cảnh quá khứ: <em>It was raining, and we were waiting for the bus.</em></li>
+                        <li>IELTS Speaking: Kể lại câu chuyện/mô tả bối cảnh quá khứ.</li>
+                    </ul>
+                `
+            },
+            {
+                title: '5. Thì Quá Khứ Đơn (Past Simple)',
+                content: `
+                    <p class="font-semibold mb-1">Công thức:</p>
+                    <ul class="list-disc list-inside space-y-1 pl-4">
+                        <li>Khẳng định: S + V2/ed</li>
+                        <li>Phủ định: S + did + not + V</li>
+                        <li>Câu hỏi: Did + S + V?</li>
+                    </ul>
+                    <p class="font-semibold mt-3 mb-1">Cách dùng:</p>
+                    <ul class="list-disc list-inside space-y-1 pl-4">
+                        <li>Hành động đã hoàn thành trong quá khứ: <em>I graduated from university in 2020.</em></li>
+                        <li>Chuỗi sự kiện trong quá khứ: <em>She woke up, brushed her teeth, and went to school.</em></li>
+                        <li>Thói quen trong quá khứ: <em>I used to play football every weekend.</em></li>
+                        <li>IELTS Writing Task 1: Mô tả số liệu/sự kiện quá khứ.</li>
+                        <li>IELTS Speaking: Kể lại trải nghiệm/sự kiện quá khứ.</li>
+                    </ul>
+                `
+            },
+            {
+                title: '6. Thì Tương Lai Đơn (Future Simple)',
+                content: `
+                    <p class="font-semibold mb-1">Công thức:</p>
+                    <ul class="list-disc list-inside space-y-1 pl-4">
+                        <li>Khẳng định: S + will + V</li>
+                        <li>Phủ định: S + will + not + V</li>
+                        <li>Câu hỏi: Will + S + V?</li>
+                    </ul>
+                    <p class="font-semibold mt-3 mb-1">Cách dùng:</p>
+                    <ul class="list-disc list-inside space-y-1 pl-4">
+                        <li>Dự đoán về tương lai: <em>It will rain this afternoon.</em></li>
+                        <li>Quyết định tức thời: <em>I’m thirsty; I will get some water.</em></li>
+                        <li>Lời hứa, đề nghị, đe dọa: <em>I will help you with your homework.</em></li>
+                        <li>IELTS Writing Task 1: Dự đoán xu hướng.</li>
+                        <li>IELTS Speaking: Kế hoạch/dự đoán.</li>
+                    </ul>
+                `
+            },
+            {
+                title: '7. Cấu Trúc Be Going To',
+                content: `
+                    <p class="font-semibold mb-1">Công thức:</p>
+                    <ul class="list-disc list-inside space-y-1 pl-4">
+                        <li>Khẳng định: S + am/is/are + going to + V</li>
+                        <li>Phủ định: S + am/is/are + not + going to + V</li>
+                        <li>Câu hỏi: Am/Is/Are + S + going to + V?</li>
+                    </ul>
+                    <p class="font-semibold mt-3 mb-1">Cách dùng:</p>
+                    <ul class="list-disc list-inside space-y-1 pl-4">
+                        <li>Kế hoạch/ý định đã quyết định trước: <em>I am going to study medicine at university.</em></li>
+                        <li>Dự đoán dựa trên bằng chứng hiện tại: <em>Look at the clouds! It is going to rain.</em></li>
+                        <li>IELTS Speaking: Kế hoạch cá nhân/dự định tương lai.</li>
+                        <li>IELTS Writing Task 2: Thảo luận về kế hoạch/dự đoán có cơ sở.</li>
+                    </ul>
+                `
+            },
+            {
+                title: 'So sánh Will và Be Going To',
+                content: `
+                    <ul class="list-disc list-inside space-y-2 pl-4">
+                        <li><strong>Will:</strong> Dùng cho dự đoán không có bằng chứng rõ ràng hoặc quyết định tức thời. <br><em>Ví dụ: I think it <strong>will snow</strong> tomorrow.</em></li>
+                        <li><strong>Be going to:</strong> Dùng cho kế hoạch đã định hoặc dự đoán dựa trên bằng chứng. <br><em>Ví dụ: The sky is dark; it <strong>is going to rain</strong>.</em></li>
+                    </ul>
+                `
+            }
+        ];
+
+        const exerciseData = [
+            {
+                id: 1,
+                question: "She usually go to work by bus.",
+                error: "Động từ 'go' không chia đúng với chủ ngữ số ít 'She'.",
+                correction: "She usually <strong>goes</strong> to work by bus.",
+                explanation: "Với thì Hiện Tại Đơn, chủ ngữ số ít (he, she, it) thì động từ phải thêm '-es'."
+            },
+            {
+                id: 2,
+                question: "I have lived here since five years.",
+                error: "Sử dụng 'since' thay vì 'for' với khoảng thời gian.",
+                correction: "I have lived here <strong>for</strong> five years.",
+                explanation: "'Since' dùng với mốc thời gian (e.g., since 2019), còn 'for' dùng với khoảng thời gian (e.g., for five years)."
+            },
+            {
+                id: 3,
+                question: "Look! The children play in the garden.",
+                error: "Sử dụng Hiện Tại Đơn cho hành động đang diễn ra.",
+                correction: "Look! The children <strong>are playing</strong> in the garden.",
+                explanation: "Đây là hành động đang xảy ra tại thời điểm nói, nên dùng Hiện Tại Tiếp Diễn."
+            },
+            {
+                id: 4,
+                question: "While I was studying, my phone rang loudly.",
+                error: "Không có lỗi ngữ pháp. Câu này đúng.",
+                correction: "While I was studying, my phone rang loudly.",
+                explanation: "Sự kết hợp giữa Quá Khứ Tiếp Diễn (hành động đang diễn ra) và Quá Khứ Đơn (hành động chen ngang) là chính xác."
+            },
+            {
+                id: 5,
+                question: "Yesterday, they have visited their grandparents.",
+                error: "Sử dụng Hiện Tại Hoàn Thành với thời gian cụ thể trong quá khứ ('Yesterday').",
+                correction: "Yesterday, they <strong>visited</strong> their grandparents.",
+                explanation: "Khi có mốc thời gian cụ thể trong quá khứ (yesterday, last week, in 2020...), chúng ta dùng thì Quá Khứ Đơn."
+            },
+            {
+                id: 6,
+                question: "I'm thirsty. I'm going to get some water.",
+                error: "Sử dụng 'be going to' cho quyết định tức thời.",
+                correction: "I'm thirsty. I <strong>will</strong> get some water.",
+                explanation: "Quyết định được đưa ra ngay tại thời điểm nói nên dùng 'will'."
+            },
+            {
+                id: 7,
+                question: "The climate is change rapidly due to human activities.",
+                error: "Động từ 'change' không chia đúng trong thì Hiện Tại Tiếp Diễn.",
+                correction: "The climate is <strong>changing</strong> rapidly due to human activities.",
+                explanation: "Trong thì Hiện Tại Tiếp Diễn, động từ chính phải ở dạng V-ing."
+            },
+            {
+                id: 8,
+                question: "When I was a child, I used to playing football every day.",
+                error: "Động từ sau 'used to' không ở dạng nguyên mẫu.",
+                correction: "When I was a child, I used to <strong>play</strong> football every day.",
+                explanation: "'Used to' luôn theo sau bởi động từ nguyên mẫu (bare infinitive)."
+            },
+            {
+                id: 9,
+                isParagraph: true,
+                question: "Last year, I have traveled to Japan. It was an amazing experience. While I was exploring Tokyo, I meet a lot of friendly locals. Next year, I am going to visit Korea, and I hope it will be as good as Japan.",
+                correction: "Last year, I <strong>traveled</strong> to Japan. It was an amazing experience. While I was exploring Tokyo, I <strong>met</strong> a lot of friendly locals. Next year, I am going to visit Korea, and I hope it will be as good as Japan.",
+                explanation: `
+                    <ul class="list-disc list-inside space-y-1">
+                        <li><strong>have traveled -> traveled:</strong> 'Last year' là mốc thời gian cụ thể trong quá khứ, dùng Quá Khứ Đơn.</li>
+                        <li><strong>meet -> met:</strong> Hành động đã xảy ra trong quá khứ, dùng Quá Khứ Đơn.</li>
+                    </ul>
+                `
+            }
+        ];
+
+        function buildAccordions() {
+            const container = document.getElementById('accordion-container');
+            container.innerHTML = theoryData.map((item, index) => `
+                <div class="border border-gray-200 rounded-lg mb-3 bg-white shadow-sm">
+                    <button class="accordion-btn w-full text-left p-4 font-semibold text-gray-800 flex justify-between items-center focus:outline-none hover:bg-gray-50" onclick="toggleAccordion(${index})">
+                        <span>${item.title}</span>
+                        <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="accordion-content px-4 pb-4 text-gray-700">
+                        ${item.content}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function buildExercises() {
+            const container = document.getElementById('exercise-container');
+            container.innerHTML = exerciseData.map(item => `
+                <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                    <p class="mb-4 text-lg">${item.isParagraph ? '<strong>Đoạn văn:</strong><br>' : ''}"${item.question}"</p>
+                    <button id="btn-${item.id}" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-300" onclick="toggleAnswer(${item.id})">Kiểm tra đáp án</button>
+                    <div id="answer-${item.id}" class="hidden mt-4 border-t pt-4">
+                        ${item.isParagraph ? '' : `<p class="mb-2"><strong class="text-red-600">Lỗi sai:</strong> ${item.error || 'Không có lỗi'}</p>`}
+                        <p class="mb-2"><strong class="text-green-600">Sửa lại:</strong> ${item.correction}</p>
+                        <p class="mb-2"><strong class="text-indigo-600">Giải thích:</strong> ${item.explanation}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function toggleAccordion(index) {
+            const button = document.querySelectorAll('.accordion-btn')[index];
+            const content = document.querySelectorAll('.accordion-content')[index];
+            const icon = button.querySelector('svg');
+
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                document.querySelectorAll('.accordion-content').forEach(el => el.style.maxHeight = null);
+                document.querySelectorAll('.accordion-btn svg').forEach(el => el.style.transform = 'rotate(0deg)');
+                content.style.maxHeight = content.scrollHeight + "px";
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        function toggleAnswer(id) {
+            const answerDiv = document.getElementById(`answer-${id}`);
+            const button = document.getElementById(`btn-${id}`);
+            const isHidden = answerDiv.classList.contains('hidden');
+
+            if (isHidden) {
+                answerDiv.classList.remove('hidden');
+                button.textContent = 'Ẩn đáp án';
+                button.classList.remove('bg-blue-500', 'hover:bg-blue-600');
+                button.classList.add('bg-gray-500', 'hover:bg-gray-600');
+            } else {
+                answerDiv.classList.add('hidden');
+                button.textContent = 'Kiểm tra đáp án';
+                button.classList.remove('bg-gray-500', 'hover:bg-gray-600');
+                button.classList.add('bg-blue-500', 'hover:bg-blue-600');
+            }
+        }
+
+        function switchMainTab(tabName) {
+            const theorySection = document.getElementById('theory-section');
+            const practiceSection = document.getElementById('practice-section');
+            const theoryBtn = document.getElementById('tab-btn-theory');
+            const practiceBtn = document.getElementById('tab-btn-practice');
+
+            if (tabName === 'theory') {
+                theorySection.classList.remove('hidden');
+                practiceSection.classList.add('hidden');
+                theoryBtn.classList.add('tab-active');
+                theoryBtn.classList.remove('tab-inactive');
+                practiceBtn.classList.add('tab-inactive');
+                practiceBtn.classList.remove('tab-active');
+            } else {
+                theorySection.classList.add('hidden');
+                practiceSection.classList.remove('hidden');
+                practiceBtn.classList.add('tab-active');
+                practiceBtn.classList.remove('tab-inactive');
+                theoryBtn.classList.add('tab-inactive');
+                theoryBtn.classList.remove('tab-active');
+            }
+        }
+
+        window.onload = function() {
+            buildAccordions();
+            buildExercises();
+        };
+    </script>
+</body>
+</html>
